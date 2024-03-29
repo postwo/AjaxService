@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.spring.ajax.dao.MemberDAO">	
+	<select id="overlay" resultType="int">
+		SELECT COUNT(id) FROM member
+			WHERE id = #{param1}	
+	</select>
+	
+	<insert id="join" parameterType="map">
+		INSERT INTO member(id,pw,name,age,gender,email)
+			VALUES(#{id},#{pw},#{name},#{age},#{gender},#{email})
+	</insert>
+	
+	<insert id="setPermission">
+		INSERT INTO author(id,perm)VALUES(#{param1},#{param2});
+	</insert>
+	
+	<select id="login" parameterType="map" resultType="map">
+		SELECT m.id, a.perm, m.name FROM member m LEFT JOIN author a ON m.id = a.id		
+		 WHERE m.id = #{id} AND m.pw = #{pw}
+	</select>
+	
+	<select id="memberList" resultType="map">
+		SELECT id, name, email FROM member
+	</select>
+	
+	
+</mapper>
